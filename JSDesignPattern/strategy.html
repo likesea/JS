@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="strageties.js" type="text/javascript"></script>
+</head>
+<body>
+<form action="http://baidu.com" id="registerForm" method="post">
+    用户名:<input type="text" name="userName"/>
+    密码:<input type="text" name="password"/>
+    手机号:<input type="text" name="phoneNumber"/>
+    <button>Submit</button>
+</form>
+<script>
+    var validataFunc= function () {
+
+        var validator = new Validator();
+        validator.add(registerForm.userName,[{strategy:'isNonEmpty',errorMsg:'用户名不能为空'}]);
+        validator.add(registerForm.password,[{strategy:'minLength:6',errorMsg:'密码长度不对'}]);
+        validator.add(registerForm.phoneNumber,[{strategy:'isMobile',errorMsg:'手机号格式不对'}]);
+        var errorMsg = validator.start();
+        return errorMsg;
+    }
+    var registerForm=document.getElementById('registerForm');
+    registerForm.onsubmit = function () {
+        var errorMsg = validataFunc();
+        if(errorMsg){
+            alert(errorMsg);
+            return false;
+        }
+    }
+
+</script>
+</body>
+</html>

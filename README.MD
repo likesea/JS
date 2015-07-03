@@ -1,0 +1,3 @@
+这个一个js学习源码库
+
+JSDesignPattern 是javascript设计模式和开发实践一书的学习code
