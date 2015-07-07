@@ -21,6 +21,21 @@ var event ={
         }
     }
 };
+//取消订阅事件
+event.remove= function (key,fn) {
+    var fns = this.clientList[key];
+    if(!fns) return false;
+    if(!fn){
+        fns&&(fns.length=0);
+    }else{
+        for(var l=fns.length-1;l>=0;l--){
+            var _fn =fns[l];
+            if(_fn===fn){
+                fns.splice(l,1);
+            }
+        }
+    }
+};
 var installEvent = function(obj){
     for(var i in event){
         obj[i]=event[i];
@@ -28,18 +43,14 @@ var installEvent = function(obj){
 };
 var salesOffices={};
 installEvent(salesOffices);
+var listener1 = function (price) {
+    console.log('price_listener1='+price);
+};
 salesOffices.listen('squreMeter88', function (price) {
     console.log('price='+price);
 })
+salesOffices.listen('squreMeter88', listener1);
 
-salesOffices.listen('squreMeter100', function (price) {
-    console.log('price='+price);
-})
-var xiaoMing ={
-    smallHouse: function () {
-
-    }
-}
+salesOffices.remove("squreMeter88",listener1);
 salesOffices.trigger('squreMeter88',200000);
-salesOffices.trigger('squreMeter88',500000);
-salesOffices.trigger('squreMeter100',300000);
+
