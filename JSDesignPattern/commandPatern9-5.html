@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<button id="replay">播放录像</button>
+<script>
+    var Ryu ={
+        attack: function(){
+            setTimeout(function () {
+                console.log( '攻击' );
+            },2000);
+
+        },
+        defense: function(){
+            setTimeout(function () {
+                console.log( '防御' );
+            },1000);
+
+        },
+        jump: function(){
+            setTimeout(function () {
+                console.log( '跳跃' );
+            },2000);
+
+        },
+        crouch: function(){
+            setTimeout(function () {
+                console.log( '蹲下' );
+            },1000);
+
+        }
+    };
+    var makeCommand = function (receiver,state) {
+        return function () {
+            receiver[state]();
+            
+        }
+    };
+
+    var commands ={
+        "119":"jump",
+        "115":"crouch",
+        "97":"defense",
+        "100":"attack"
+    };
+    var commandStack =[];
+    var runStack=[];
+    document.onkeypress = function(ev){
+        var keyCode = ev.keyCode,
+                command = makeCommand(Ryu,commands[keyCode]);
+
+
+        if (command){
+            command();
+            commandStack.push(command);
+        }
+    };
+    document.getElementById('replay').onclick= function () {
+        var command;
+        while(command = commandStack.shift()){
+            command();
+        }
+    }
+</script>
+</body>
+</html>
